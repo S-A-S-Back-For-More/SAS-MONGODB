@@ -5,6 +5,7 @@
 // import "./App.css"
 // import Typography from '@mui/material/Typography';
 import RegisterForm from './components/RegisterForm';
+import LoginForm from './components/LoginForm';
 
 function App() {
   
@@ -14,7 +15,7 @@ function App() {
       {/* <Typography variant="h1" gutterBottom>
         h1. Heading
       </Typography> */}
-      <RegisterForm/>
+      <LoginForm/>
 
 
     </div>
