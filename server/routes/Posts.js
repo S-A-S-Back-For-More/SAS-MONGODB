@@ -6,17 +6,24 @@ const{getPosts,createPost,updatePost,deletePost} = require("../controllers/postC
 // *********NOTE: FOR ADDING FUNCTIONALITY TO EACH ROUTER, BEST PRACTICE IS TO CREATE A CONTROLLER FOR EACH ROUTER!!!!!!!!!!!!!**************************
 
 //GET REQUEST
-router.get('/', getPosts)
-
+// router.get('/', getPosts)
 
 //POST REQUEST(create)
-router.post('/', createPost)
-
+// router.post('/', createPost)
 
 //PUT REQUEST(UPDATE)
-router.put('/:id', updatePost)
-
+// router.put('/:id', updatePost)
 
 //DELETE REQUEST(DELETE)
-router.delete('/:id', deletePost)
+// router.delete('/:id', deletePost)
+
+
+//========chaining routers because they have same entry point========
+//GET, POST
+router.route('/').get(getPosts).post(createPost)
+//PUT, DELETE
+router.route('/:id').put(updatePost).delete(deletePost)
+
+
+
 module.exports = router;
