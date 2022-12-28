@@ -2,6 +2,7 @@ import "./registerForm.css";
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import { signupSchema } from "../assets/utils/validationSchema/index";
+import VideoBackground from "./VideoBckground";
 
 
 
@@ -19,7 +20,9 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="app">
+    <div className="parent">
+         <h1 style={{textAlign: 'center'}}>S.A.S Travel Blog</h1>
+         <VideoBackground style={{height: '100%',backgroundSize: 'cover'}}/>
       <Formik
         initialValues={initialValues}
         validationSchema={signupSchema}

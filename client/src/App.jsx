@@ -15,7 +15,7 @@ function App() {
       {/* <Typography variant="h1" gutterBottom>
         h1. Heading
       </Typography> */}
-      <LoginForm/>
+      <RegisterForm/>
 
 
     </div>
