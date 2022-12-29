@@ -1,6 +1,6 @@
 import React from "react";
 import videoBg from "../assets/videoBg.mp4";
-import CTA from "./CTA";
+// import CTA from "./CTA";
 
 function videoBackground() {
   return (
@@ -14,23 +14,6 @@ function videoBackground() {
         overflow: "hidden",
       }}
     >
-      <div
-        className="cta"
-        style={{
-          background: "black",
-          opacity: ".7",
-          position: "absolute",
-         
-          zIndex: "3",
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "start",
-        }}
-      >
-        <CTA />
-      </div>
       <video
         src={videoBg}
         autoPlay

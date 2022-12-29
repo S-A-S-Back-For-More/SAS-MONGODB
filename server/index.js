@@ -10,6 +10,10 @@ const{errHandler} = require('./middleware/errorMidddleware')
 //mongodb conn
 const connectDB = require('./config/db')
 connectDB()
+
+const cors = require('cors')
+
+
 //ACCES PORT STORED IN DOTENV (if not working for some reason will access 3001)
 const port = process.env.PORT || 3001;
 const app = express();
@@ -26,6 +30,13 @@ app.use(express.json())
 app.use('/api/posts', require('./routes/Posts'))
 //err handler
 app.use(errHandler)
+
+// const corsOptions ={
+//     origin:'http://localhost:5000/api/posts', 
+//     credentials:true,            //access-control-allow-credentials:true
+//     optionSuccessStatus:200
+// }
+// app.use(cors(corsOptions));
 
 //start server // ctrl + c --kill terminal
 app.listen(port, () =>{console.log(`App listening on port ${port}`)});        

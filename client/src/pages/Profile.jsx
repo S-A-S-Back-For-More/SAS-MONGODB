@@ -1,13 +1,16 @@
 import Navbar from "../components/Navbar";
 import ContainerProfile from "../components/ContainerProfile";
+import BtnProfile from "../components/BtnProfile";
 
 function Profile() {
   return (
-    <>
+    <div >
       <Navbar />
-      {/* <h1>Profile</h1> */}
+     
+      <BtnProfile />
+     
       <ContainerProfile />
-    </>
+    </div>
   );
 }
 

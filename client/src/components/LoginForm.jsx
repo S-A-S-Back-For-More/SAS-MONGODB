@@ -3,7 +3,7 @@ import "./loginform.css";
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import { loginSchema } from "../assets/utils/validationSchema/index";
-import VideoBackground from "./VideoBckground";
+import VideoBackground from "./VideoBackground";
 
 
 
@@ -21,7 +21,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="parent" style={{display: 'none'}}>
+    <div className="parent" style={{display: 'block'}}>
         <h1 style={{textAlign: 'center',marginTop: '-2em'}}>S.A.S Travel Blog</h1>
         {/* <VideoBackground style={{height: '100%',backgroundSize: 'cover'}}/> */}
       <Formik

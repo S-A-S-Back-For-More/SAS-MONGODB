@@ -12,7 +12,7 @@ function AddPost() {
 
   const createPost = () => {
     axios.post("#", {
-      title: title,
+      
       location: location,
       content: content,
       image: image.toString(),
@@ -40,17 +40,7 @@ function AddPost() {
         {/*  set the encoding type to send the multipart data or files through form data. */}
         <form action="#" method="post" onChange={(e) => { e.preventDefault() }} onClick={createPost} 
         >
-        <input
-          type="text"
-          name="title"
-          id=""
-          value={title}
-          style={{ width: "30em", marginBottom: "2em", marginTop: "2em" }}
-          placeholder="Country"
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-        />
+      
         <input
           type="text"
           name="location"
