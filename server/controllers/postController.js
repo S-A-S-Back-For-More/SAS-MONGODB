@@ -4,11 +4,15 @@
 // ==============================================================================
 // -==========================================================================
 const asyncHandler = require('express-async-handler');
+
+const Post = require('../models/postModel');
+const { post } = require('../routes/Posts');
 //@description  get post
 //@route        GET/api/posts
 //@access       private(after added authentication)
 const getPosts = asyncHandler(async (req,res) => {
-    res.json({message: 'get request'})
+    const posts = await Post.find()
+    res.json(posts)
 })
 
 //@description  create post
@@ -16,20 +20,36 @@ const getPosts = asyncHandler(async (req,res) => {
 //@access       private(after added authentication)
 const createPost = asyncHandler(async (req,res) => {
     //=====err handling======
-    if(!req.body.text) {
+    if(!req.body.location || !req.body.description || !req.body.image) {
         //bad request err(if user add a post which is not a text)
         res.status(400)
         //express err handler//will create err difficult to read->so.. create foolder(middleware) in server folder for custom error handling that exe during req / res cycle
         throw new Error('Bad request! Please add a text field to your post')
     }
-    res.json({message: 'create request'})
+    const post = await Post.create({
+        
+        location:req.body.location,
+       description:req.body.description,
+        image:req.body.image,
+
+    })
+    res.json(post)
 })
 
 //@description  update post
 //@route        PUT/api/posts/:id
 //@access       private(after added authentication)
 const updatePost = asyncHandler(async(req,res) => {
-    res.json({message: `update request ${req.params.id}`})
+    const post = await Post.findById(req.params.id)
+    if(!post) {
+        res.status(400)
+        throw new Error('Post not found')
+
+    }
+    const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body,{
+        new: true,
+    })
+    res.json(updatedPost)
 })
 
 
@@ -37,7 +57,14 @@ const updatePost = asyncHandler(async(req,res) => {
 //@route        DELETE/api/posts/:id
 //@access       private(after added authentication)
 const deletePost = asyncHandler(async (req,res) => {
-    res.json({message: `delete request${req.params.id}`})
+    const post = await Post.findById(req.params.id)
+    if(!post) {
+        res.status(400)
+        throw new Error('Post not found')
+
+    }
+    await post.delete()
+    res.json({id: req.params.id})
 })
 //export the function to be used in routes
 module.exports = {

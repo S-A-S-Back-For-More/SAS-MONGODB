@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 
-const PostSchema = new mongoose.Schema({
+const postSchema = new mongoose.Schema({
     location: {
         type:String,
         required: true,
@@ -16,5 +16,5 @@ const PostSchema = new mongoose.Schema({
     }
 })
 
-const UserPost = mongoose.model('User-Posts',PostSchema);    
-module.exports = UserPost;
+   //export to controllers!!!
+module.exports = mongoose.model('Post', postSchema);
