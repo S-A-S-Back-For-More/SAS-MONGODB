@@ -14,9 +14,12 @@
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.2",
+    "axios": "^1.2.1",
+    "cors": "^2.8.5",
     "formik": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.6.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {

@@ -21,9 +21,9 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="parent">
-        <h1 style={{textAlign: 'center'}}>S.A.S Travel Blog</h1>
-        <VideoBackground style={{height: '100%',backgroundSize: 'cover'}}/>
+    <div className="parent" style={{display: 'none'}}>
+        <h1 style={{textAlign: 'center',marginTop: '-2em'}}>S.A.S Travel Blog</h1>
+        {/* <VideoBackground style={{height: '100%',backgroundSize: 'cover'}}/> */}
       <Formik
         initialValues={initialValues}
         validationSchema={loginSchema}
