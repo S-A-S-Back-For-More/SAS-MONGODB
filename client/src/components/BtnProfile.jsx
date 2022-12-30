@@ -6,7 +6,7 @@ import "./btn-profile.css";
 import { useNavigate } from "react-router-dom";
 // import {Link} from "react-router-dom"
 
-function CTA() {
+function BtnProfile() {
   let navigate = useNavigate();
   return (
     <>
@@ -47,4 +47,4 @@ function CTA() {
     </>
   );
 }
-export default CTA;
+export default BtnProfile;

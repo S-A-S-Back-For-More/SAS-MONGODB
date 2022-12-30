@@ -4,11 +4,11 @@ import BtnProfile from "../components/BtnProfile";
 
 function Profile() {
   return (
-    <div >
+    <div>
       <Navbar />
-     
+
       <BtnProfile />
-     
+
       <ContainerProfile />
     </div>
   );
