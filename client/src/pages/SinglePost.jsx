@@ -1,26 +1,43 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import BtnPost from "../components/BtnPost"
+import BtnPost from "../components/BtnPost";
 //helps with viewing single post based on id
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
-
+//post/?838392823939
 function SinglePost() {
   let { id } = useParams();
   const [postObject, setPostObject] = useState({});
+  const [searchParams] = useSearchParams();
 
   //single post
   useEffect(() => {
-    axios.get(`#`).then((response) => {
-      setPostObject(response.data);
-    });
+    axios
+      .get(`http://localhost:5000/api/posts/post/${searchParams.get("id")}`)
+      .then((response) => {
+        console.log(response.data);
+        setPostObject(response.data);
+      });
   }, []);
   return (
     <>
       <Navbar />
       <h1 style={{ margin: "0 auto" }}>My post</h1>
-      <div className="wrapper" style={{border: '1px solid white', width: '60%',height: '40em', display: 'flex', flexDirection: 'column', margin: '0 auto', alignItems: 'center', marginTop: '5em'}}>
+      <div
+        className="wrapper"
+        style={{
+          border: "1px solid white",
+          width: "60%",
+          height: "40em",
+          display: "flex",
+          flexDirection: "column",
+          margin: "0 auto",
+          alignItems: "center",
+          marginTop: "5em",
+        }}
+      >
         <div
           className="card"
           style={{
@@ -36,19 +53,28 @@ function SinglePost() {
             marginTop: "5em",
           }}
         >
-          <div>{postObject.title}</div>
-          <div>{postObject.location}</div>
-          <div>{postObject.content}</div>
+          <h3 style={{ color: "white" }}>{postObject.location}</h3>
+          <h5 style={{ color: "white" }}>{postObject.description}</h5>
         </div>
         <div className="container-img">
           <div>
-            <img src={postObject.image} style={{width: '25em'}}/>
+            <img src={postObject.image} style={{ width: "25em" }} />
           </div>
         </div>
       </div>
-      <BtnPost/>
+      <BtnPost />
     </>
   );
 }
 
 export default SinglePost;
+//create a link for admin login on login page
+//get all posts in commuinty page
+//view post image in recommendation page on the cube -- user
+//view detailed view of post -- user
+//view image of posts on profile page --user
+//add post image on the recommendation page -- admin
+//create a new post --admin
+//view all users, delete users --admin
+//delete the post --user
+//update the post --user

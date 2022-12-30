@@ -26,12 +26,12 @@ function App() {
       <Routes>
         <Route path="/recomandations" element={<Recomandations />} />
         <Route path="/community" element={<Community />} />
-        <Route path="/profile" element={<Profile />} /> 
+        <Route path="/profile" element={<Profile />} />
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-         <Route path="/post/:id" element={<SinglePost />} />
+        <Route path="/post" element={<SinglePost />} />
         <Route path="/add-post" element={<AddPost />} />
         <Route path="/*" element={<ErrorPage />} />
       </Routes>

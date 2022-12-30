@@ -1,7 +1,7 @@
 import "./containerProfile.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import BtnProfile from "./BtnProfile";
 //import Posts from "./posts/posts";
 
@@ -15,6 +15,14 @@ function ContainerProfile() {
       setListOfPosts(response.data);
     });
   }, []);
+  const viewDetails = (id) => {
+    navigate({
+      pathname: "/post",
+      search: createSearchParams({
+        id: id,
+      }).toString(),
+    });
+  };
 
   return (
     <>
@@ -31,9 +39,7 @@ function ContainerProfile() {
                   width: "300px",
                   height: "300px",
                 }}
-                onClick={() => {
-                  navigate(`/post/${value._id}`);
-                }}
+                onClick={() => viewDetails(value._id)}
               >
                 {/* <div className="title" >{value.title}</div> */}
                 <div className="location">{value.location}</div>

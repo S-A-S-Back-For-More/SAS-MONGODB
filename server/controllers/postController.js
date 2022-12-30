@@ -62,10 +62,23 @@ const deletePost = asyncHandler(async (req, res) => {
   await post.delete();
   res.json({ id: req.params.id });
 });
+
+const getPost = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
+  Post.findById(id)
+    .then((post) => {
+      res.json(post);
+    })
+    .catch((err) => {
+      res.json({ error: err });
+    });
+});
 //export the function to be used in routes
 module.exports = {
   getPosts,
   createPost,
   updatePost,
   deletePost,
+  getPost,
 };
