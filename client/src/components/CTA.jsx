@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 // import {Link} from "react-router-dom"
 
 function CTA() {
-  
   let navigate = useNavigate();
   return (
     <>
@@ -20,10 +19,9 @@ function CTA() {
             onClick={() => {
               navigate("/login");
             }}
-            
+
             //   {const showLogin = document.querySelector(".parent");
             // showLogin.style.display = 'block'};
-          
           >
             <span className="btn--anim"></span>
             <span className="btn--anim"></span>

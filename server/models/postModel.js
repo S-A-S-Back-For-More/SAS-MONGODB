@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
 const postSchema = new mongoose.Schema({
+  _id: mongoose.Schema.Types.ObjectId,
   location: {
     type: String,
     required: true,
@@ -14,8 +15,8 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
+  authorID: {
+    type: String,
   },
 });
 

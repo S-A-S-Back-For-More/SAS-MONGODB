@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BtnProfile from "./BtnProfile";
+//import Posts from "./posts/posts";
 
 function ContainerProfile() {
   let navigate = useNavigate();
@@ -31,7 +32,7 @@ function ContainerProfile() {
                   height: "300px",
                 }}
                 onClick={() => {
-                  navigate(`/post/${value.id}`);
+                  navigate(`/post/${value._id}`);
                 }}
               >
                 {/* <div className="title" >{value.title}</div> */}

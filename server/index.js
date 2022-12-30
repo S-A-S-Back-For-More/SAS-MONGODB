@@ -3,6 +3,8 @@
 const express = require("express");
 //---help with the terminal GUI by being able to change text colors in terminal
 const colors = require("colors");
+const cors = require("cors");
+
 //config() help with having a dotenv file with vars in it
 const dotenv = require("dotenv").config();
 const { errHandler } = require("./middleware/errorMidddleware");
@@ -10,13 +12,11 @@ const { errHandler } = require("./middleware/errorMidddleware");
 const connectDB = require("./config/db");
 connectDB();
 
-const cors = require("cors");
-
 //ACCES PORT STORED IN DOTENV (if not working for some reason will access 3001)
 const port = process.env.PORT || 3001;
 const app = express();
 //mongodb set up
-
+app.use(cors());
 //middleware
 app.use(express.json()).use(express.urlencoded({ extended: false }));
 
