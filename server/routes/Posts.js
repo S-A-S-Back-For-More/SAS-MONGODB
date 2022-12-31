@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 //import controller from controllers folder to be able to use the logic defined there
 const {
-  getPosts,
+  getUserPosts,
   createPost,
   updatePost,
   deletePost,
   getPost,
+  getSingleUserPosts,
 } = require("../controllers/postController");
 
 // *********NOTE: FOR ADDING FUNCTIONALITY TO EACH ROUTER, BEST PRACTICE IS TO CREATE A CONTROLLER FOR EACH ROUTER!!!!!!!!!!!!!**************************
@@ -25,7 +26,9 @@ const {
 
 //========chaining routers because they have same entry point========
 //GET, POST
-router.route("/").get(getPosts).post(createPost);
+router.route("/").post(createPost);
+router.route("/userposts").get(getUserPosts);
+router.route("/singleuserpost/:id").get(getSingleUserPosts);
 router.route("/post/:id").get(getPost);
 //PUT, DELETE
 router.route("/:id").put(updatePost).delete(deletePost);

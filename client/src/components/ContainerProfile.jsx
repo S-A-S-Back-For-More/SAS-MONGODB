@@ -5,15 +5,26 @@ import { useNavigate, createSearchParams } from "react-router-dom";
 import BtnProfile from "./BtnProfile";
 //import Posts from "./posts/posts";
 
+//fetch id from context api
+const id = "63af0594151ed1332c88f2ad";
 function ContainerProfile() {
   let navigate = useNavigate();
   const [listOfPosts, setListOfPosts] = useState([]);
+  const [delResponse, setdelResponse] = useState(null);
+  const [editResponse, setEditResponse] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [image, setImage] = useState(null);
+  const [content, setcontent] = useState(null);
+  const [open, setOpen] = useState(false);
+
   // const [post, setPost] = useState([]);
   //all posts
   useEffect(() => {
-    axios.get("http://localhost:5000/api/posts").then((response) => {
-      setListOfPosts(response.data);
-    });
+    axios
+      .get(`http://localhost:5000/api/posts/singleuserpost/${id}`)
+      .then((response) => {
+        setListOfPosts(response.data);
+      });
   }, []);
   const viewDetails = (id) => {
     navigate({
@@ -22,6 +33,27 @@ function ContainerProfile() {
         id: id,
       }).toString(),
     });
+  };
+
+  const deletePost = (event, id) => {
+    event.stopPropagation();
+    axios.delete(`http://localhost:5000/api/posts/${id}`).then((response) => {
+      setdelResponse(response.data);
+    });
+  };
+
+  const editPost = () => {
+    console.log("inside edit function");
+    setOpen(true);
+    axios.get(`http://localhost:5000/api/posts/post/${id}`).then((response) => {
+      setEditResponse(response.data);
+    });
+    editResponse && console.log(editResponse);
+
+    editResponse &&
+      setLocation(editResponse.location) &&
+      setContent(editResponse.description) &&
+      setImage(editResponse.image);
   };
 
   return (
@@ -39,12 +71,21 @@ function ContainerProfile() {
                   width: "300px",
                   height: "300px",
                 }}
-                onClick={() => viewDetails(value._id)}
+                //   onClick={() => viewDetails(value._id)}
               >
                 {/* <div className="title" >{value.title}</div> */}
                 <div className="location">{value.location}</div>
                 <div className="content">{value.content}</div>
                 <div className="image">
+                  <span
+                    className="material-symbols-outlined"
+                    onClick={() => deletePost(event, value._id)}
+                  >
+                    delete
+                  </span>
+                  <span class="material-symbols-outlined" onClick={editPost}>
+                    edit
+                  </span>
                   <img
                     src={value.image}
                     style={{ width: "100%", height: "15em" }}
@@ -55,28 +96,52 @@ function ContainerProfile() {
           );
         })}
 
-        {/* {post.map((value, key) => {
-          return (
-            <>
-              <div className="post"   onClick={() => {
-                      navigate("/post");
-                    }}>
-                <div className="title">{value.title}</div>
-                <div className="location">{value.location}</div>
-                <div className="content">{value.content}</div>
-                <div className="image">
-                  <img
-                    src={value.image}
-                    style={{ width: "100%", height: "15em" }}
-                  
-                  />
-                </div>
-              </div>
-            </>
-          );
-        })} */}
+        {open && (
+          <form>
+            <input
+              type="text"
+              name="location"
+              id=""
+              value={location}
+              style={{ width: "30em", marginBottom: "2em" }}
+              placeholder="Location"
+              onChange={(e) => {
+                setLocation(e.target.value);
+              }}
+            />
+            <textarea
+              name="content"
+              id=""
+              cols="30"
+              rows="10"
+              value={content}
+              placeholder="your description"
+              style={{ width: "30em", marginBottom: "2em" }}
+              onChange={(e) => {
+                setContent(e.target.value);
+              }}
+            ></textarea>
+            <br />
+            <input
+              type="file"
+              name="addImg"
+              id=""
+              value={image}
+              onChange={(e) => {
+                setImage(e.target.value);
+              }}
+            />
+            <br />
+            <button
+              type="submit"
+              style={{ zIndex: "10", marginTop: "10em", marginBottom: "2em" }}
+            >
+              Update Post
+            </button>
+          </form>
+        )}
       </div>
-      {/* <div className="btn-group"> */}
+
       <BtnProfile />
     </>
   );

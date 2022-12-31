@@ -11,23 +11,7 @@ function BtnProfile() {
   return (
     <>
       <div className="group-btn">
-        <div className="login-btn-wrapper">
-          {/* <Link to={`/${<Login/>}`}> */}
-          <button
-            className="delete"
-            id="delete-btn"
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            <span className="btn--anim"></span>
-            <span className="btn--anim"></span>
-            <span className="btn--anim"></span>
-            <span className="btn--anim"></span>
-            DELETE ALL
-          </button>
-          {/* </Link> */}
-        </div>
+        <div className="login-btn-wrapper">{/* </Link> */}</div>
         <div className="register-btn-wrapper">
           <button
             className="add"

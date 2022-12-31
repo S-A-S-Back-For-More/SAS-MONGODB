@@ -13,12 +13,22 @@ const postSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
   },
   authorID: {
     type: String,
+  },
+  type: {
+    type: String,
+    default: "user",
   },
 });
 
 //export to controllers!!!
 module.exports = mongoose.model("Post", postSchema);
+//getusers
+88934844934;
+
+//post /api/post
+{
+  name: location: image: authorID: 88934844934;
+}

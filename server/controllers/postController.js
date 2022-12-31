@@ -10,8 +10,8 @@ const { post } = require("../routes/Posts");
 //@description  get post
 //@route        GET/api/posts
 //@access       private(after added authentication)
-const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find();
+const getUserPosts = asyncHandler(async (req, res) => {
+  const posts = await Post.find({ type: "user" });
   res.json(posts);
 });
 
@@ -20,7 +20,7 @@ const getPosts = asyncHandler(async (req, res) => {
 //@access       private(after added authentication)
 const createPost = asyncHandler(async (req, res) => {
   //=====err handling======
-  if (!req.body.location || !req.body.description || !req.body.image) {
+  if (!req.body.location || !req.body.description) {
     //bad request err(if user add a post which is not a text)
     res.status(400);
     //express err handler//will create err difficult to read->so.. create foolder(middleware) in server folder for custom error handling that exe during req / res cycle
@@ -31,6 +31,8 @@ const createPost = asyncHandler(async (req, res) => {
     location: req.body.location,
     description: req.body.description,
     image: req.body.image,
+    authorID: req.body.authorID || "",
+    type: req.body.type || "user",
   });
   res.json(post);
 });
@@ -62,6 +64,15 @@ const deletePost = asyncHandler(async (req, res) => {
   await post.delete();
   res.json({ id: req.params.id });
 });
+// const deletePost = asyncHandler(async (req, res) => {
+//   const post = await Post.findById(req.params.id);
+//   if (!post) {
+//     res.status(400);
+//     throw new Error("Post not found");
+//   }
+//   await post.delete();
+//   res.json({ id: req.params.id });
+// });
 
 const getPost = asyncHandler(async (req, res) => {
   const id = req.params.id;
@@ -74,9 +85,21 @@ const getPost = asyncHandler(async (req, res) => {
       res.json({ error: err });
     });
 });
+const getSingleUserPosts = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
+  Post.find({ authorID: id.toString() })
+    .then((posts) => {
+      res.json(posts);
+    })
+    .catch((err) => {
+      res.json({ error: err });
+    });
+});
 //export the function to be used in routes
 module.exports = {
-  getPosts,
+  getSingleUserPosts,
+  getUserPosts,
   createPost,
   updatePost,
   deletePost,

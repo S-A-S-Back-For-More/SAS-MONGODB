@@ -4,21 +4,24 @@ import axios from "axios";
 import { useState } from "react";
 
 function AddPost() {
-
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
 
-  const createPost = () => {
-    axios.post("#", {
-      
-      location: location,
-      content: content,
-      image: image.toString(),
-    }).then((response) => {
-      console.log('success:', response)
-    });
+  //make sure to fetch the id from context api and add it dynamiccaly to the post request here, I am hardcoding it for now
+  const createPost = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:5000/api/posts/", {
+        location,
+        description: content,
+        image,
+        authorID: "63af0594151ed1332c88f2ad",
+      })
+      .then((response) => {
+        console.log("success:", response.data);
+      });
   };
   return (
     <>
@@ -38,58 +41,51 @@ function AddPost() {
         }}
       >
         {/*  set the encoding type to send the multipart data or files through form data. */}
-        <form action="#" method="post" onChange={(e) => { e.preventDefault() }} onClick={createPost} 
-        >
-      
-        <input
-          type="text"
-          name="location"
-          id=""
-          value={location}
-          style={{ width: "30em", marginBottom: "2em" }}
-          placeholder="Location"
-          onChange={(e) => {
-            setLocation(e.target.value);
-          }}
-        />
-        <textarea
-          name="content"
-          id=""
-          cols="30"
-          rows="10"
-          value={content}
-          placeholder="your description"
-          style={{ width: "30em", marginBottom: "2em" }}
-          onChange={(e) => {
-
-            setContent(e.target.value);
-          }}
-        >
-
-        </textarea>
-        <br />
-        <input
-          type="file"
-          name="addImg"
-          id=""
-          value={image}
-          onChange={(e) => {
-
-            setImage(e.target.value);
-          }}
-        />
-        <br />
-        <button
-          type="submit"
-          style={{ marginTop: "4em" }}>
-
-          Add post
-        </button>
-      </form>
-    </div>
-   
-  </>
-
+        <form>
+          <input
+            type="text"
+            name="location"
+            id=""
+            value={location}
+            style={{ width: "30em", marginBottom: "2em" }}
+            placeholder="Location"
+            onChange={(e) => {
+              setLocation(e.target.value);
+            }}
+          />
+          <textarea
+            name="content"
+            id=""
+            cols="30"
+            rows="10"
+            value={content}
+            placeholder="your description"
+            style={{ width: "30em", marginBottom: "2em" }}
+            onChange={(e) => {
+              setContent(e.target.value);
+            }}
+          ></textarea>
+          <br />
+          <input
+            type="file"
+            name="addImg"
+            id=""
+            value={image}
+            onChange={(e) => {
+              setImage(e.target.value);
+            }}
+          />
+          <br />
+          <button
+            onClick={createPost}
+            type="submit"
+            style={{ marginTop: "4em" }}
+          >
+            Add post
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
 

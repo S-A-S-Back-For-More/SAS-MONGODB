@@ -1,5 +1,6 @@
-import * as React from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -13,30 +14,24 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function FullWidthGrid() {
+  const [posts, setPosts] = React.useState(null);
+  React.useEffect(() => {
+    axios.get(`http://localhost:5000/api/posts/userposts`).then((response) => {
+      console.log(response.data);
+      setPosts(response.data);
+    });
+  }, []);
   return (
-    <Box sx={{ flexGrow: 1 }} padding=" 3em">
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={12}>
-          <Item style={{ background: "#1a1a1a", color: "white" }}>
-            <h1>Community pick</h1>
-          </Item>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Item>xs=6 md=4</Item>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <Item>xs=6 md=4</Item>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Item>xs=6 md=8</Item>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Item>xs=6 md=8</Item>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Item>xs=6 md=8</Item>
-        </Grid>
-      </Grid>
-    </Box>
+    <div>
+      {posts &&
+        posts.map((post) => {
+          return (
+            <div key={post._id}>
+              <h3 style={{ color: "white" }}>{post.location}</h3>
+              <h3 style={{ color: "white" }}>{post.description}</h3>
+            </div>
+          );
+        })}
+    </div>
   );
 }

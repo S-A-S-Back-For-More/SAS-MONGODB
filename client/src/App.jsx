@@ -23,6 +23,7 @@ function App() {
     <div className="App">
       {/* <Home/> */}
       {/* <Navbar /> */}
+
       <Routes>
         <Route path="/recomandations" element={<Recomandations />} />
         <Route path="/community" element={<Community />} />

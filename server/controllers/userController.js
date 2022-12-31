@@ -9,4 +9,9 @@ const createUser = asyncHandler(async (req, res) => {
   });
   res.json(user);
 });
-module.exports = { createUser };
+
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+});
+module.exports = { createUser, getUsers };
