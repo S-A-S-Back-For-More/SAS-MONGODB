@@ -16,15 +16,17 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import SinglePost from "./pages/SinglePost";
 import AddPost from "./pages/AddPost";
+import AdminDashboard from "./pages/AdminDashboard";
 // import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <div className="App">
+      <AdminDashboard />
       {/* <Home/> */}
       {/* <Navbar /> */}
 
-      <Routes>
+      {/* <Routes>
         <Route path="/recomandations" element={<Recomandations />} />
         <Route path="/community" element={<Community />} />
         <Route path="/profile" element={<Profile />} />
@@ -35,7 +37,7 @@ function App() {
         <Route path="/post" element={<SinglePost />} />
         <Route path="/add-post" element={<AddPost />} />
         <Route path="/*" element={<ErrorPage />} />
-      </Routes>
+      </Routes> */}
     </div>
   );
 }
