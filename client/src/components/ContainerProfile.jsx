@@ -93,7 +93,7 @@ function ContainerProfile() {
                   >
                     delete
                   </span>
-                  <span class="material-symbols-outlined" onClick={editPost}>
+                  <span className="material-symbols-outlined" onClick={editPost}>
                     edit
                   </span>
                   <img
