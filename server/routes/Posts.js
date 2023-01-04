@@ -8,6 +8,8 @@ const {
   deletePost,
   getPost,
   getSingleUserPosts,
+  getPostCount,deletePosts,
+  getAdminPosts
 } = require("../controllers/postController");
 
 // *********NOTE: FOR ADDING FUNCTIONALITY TO EACH ROUTER, BEST PRACTICE IS TO CREATE A CONTROLLER FOR EACH ROUTER!!!!!!!!!!!!!**************************
@@ -28,9 +30,12 @@ const {
 //GET, POST
 router.route("/").post(createPost);
 router.route("/userposts").get(getUserPosts);
+router.route("/adminposts").get(getAdminPosts);
 router.route("/singleuserpost/:id").get(getSingleUserPosts);
 router.route("/post/:id").get(getPost);
+router.route("/postCount").get(getPostCount)
 //PUT, DELETE
 router.route("/:id").put(updatePost).delete(deletePost);
+router.route("/").delete(deletePosts);
 
 module.exports = router;

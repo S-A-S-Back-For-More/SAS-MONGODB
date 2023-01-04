@@ -23,6 +23,7 @@ app.use(express.json()).use(express.urlencoded({ extended: false }));
 //accesing the router defined in routes folder
 app.use("/api/posts", require("./routes/Posts"));
 app.use("/api/users", require("./routes/Users"));
+app.use("/api/images",require('./routes/Uploads'))
 //err handler
 app.use(errHandler);
 

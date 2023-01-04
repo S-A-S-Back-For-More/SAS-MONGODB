@@ -62,14 +62,14 @@
   
   .front {
     transform: translateZ(5em);
-    background-image: url(../assets/images/africa-cube.jpg);
+    background-image: url(../assets/images/front.jpg);
     background-repeat: no-repeat;
     background-size: cover;
   }
   
   .back {
     transform: translateZ(-5em);
-    background-image: url(../assets/images/bran-castle-cube.jpg);
+    background-image: url(../assets/images/back.jpg);
     background-repeat: no-repeat;
     background-size: cover;
   }
@@ -87,14 +87,14 @@
   
   .right {
     transform: translateX(5em) rotateY(90deg);
-    background-image: url(../assets/images/maldive-cube.jpg);
+    background-image: url(../assets/images/right.jpg);
     background-repeat: no-repeat;
     background-size: cover;
   }
   
   .left {
     transform: translateX(-5em) rotateY(90deg);
-    background-image: url(../assets/images/paris.jpg);
+    background-image: url(../assets/images/left.jpg);
     background-repeat: no-repeat;
     background-size: cover;
   }

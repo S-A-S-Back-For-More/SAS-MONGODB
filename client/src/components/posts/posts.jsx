@@ -1,5 +1,5 @@
 import React from "react";
-import Acios from "axios";
+import axios from "axios";
 const id = "63aefe437dfec286e6903787";
 const posts = () => {
   const [posts, setPosts] = useState(null);

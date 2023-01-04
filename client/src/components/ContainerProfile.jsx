@@ -26,6 +26,13 @@ function ContainerProfile() {
         setListOfPosts(response.data);
       });
   }, []);
+  function arrayBufferToBase64(buffer) {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
+
   const viewDetails = (id) => {
     navigate({
       pathname: "/post",
@@ -52,7 +59,7 @@ function ContainerProfile() {
 
     editResponse &&
       setLocation(editResponse.location) &&
-      setContent(editResponse.description) &&
+      setcontent(editResponse.description) &&
       setImage(editResponse.image);
   };
 
@@ -62,6 +69,9 @@ function ContainerProfile() {
       <div className="container" style={{ border: "1px solid white" }}>
         {/* get all posts */}
         {listOfPosts.map((value, key) => {
+          let array = value.image?.img?.data?.data
+          let binaryString = `data:image/jpeg;base64,${arrayBufferToBase64(array)}`
+  
           return (
             <div key={key}>
               <div
@@ -71,7 +81,7 @@ function ContainerProfile() {
                   width: "300px",
                   height: "300px",
                 }}
-                //   onClick={() => viewDetails(value._id)}
+                  onClick={() => viewDetails(value._id)}
               >
                 {/* <div className="title" >{value.title}</div> */}
                 <div className="location">{value.location}</div>
@@ -87,7 +97,7 @@ function ContainerProfile() {
                     edit
                   </span>
                   <img
-                    src={value.image}
+                    src={binaryString}
                     style={{ width: "100%", height: "15em" }}
                   />
                 </div>

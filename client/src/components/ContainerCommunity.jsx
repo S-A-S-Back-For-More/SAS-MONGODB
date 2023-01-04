@@ -1,17 +1,10 @@
 import React from "react";
-import { styled } from "@mui/material/styles";
-import axios from "axios";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+import axios from "axios";
+
+import avatar from "../assets/avatar.jpg";
+import "./ContainerCommunity.css";
+
 
 export default function FullWidthGrid() {
   const [posts, setPosts] = React.useState(null);
@@ -21,15 +14,29 @@ export default function FullWidthGrid() {
       setPosts(response.data);
     });
   }, []);
+
+     function arrayBufferToBase64(buffer) {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
   return (
-    <div>
+    <div className="mainContainer">
       {posts &&
         posts.map((post) => {
+          let array = post.image?.img?.data?.data
+          let binaryString = `data:image/jpeg;base64,${arrayBufferToBase64(array)}`
+  
           return (
-            <div key={post._id}>
-              <h3 style={{ color: "white" }}>{post.location}</h3>
-              <h3 style={{ color: "white" }}>{post.description}</h3>
+            <div className="card1" key={post._id}>
+              <img src={binaryString} alt="Avatar" style={{width:"100%"}}/>
+              <div className="container1">
+                <h4 ><b>{post.location}</b></h4>
+                <p>{post.description}</p>
+              </div>
             </div>
+
           );
         })}
     </div>

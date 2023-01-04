@@ -6,6 +6,12 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
   },
+    email: {
+    type: String,
+  },
+    contact: {
+    type: String,
+  },
 });
 
 //export to controllers!!!
