@@ -1,9 +1,9 @@
-import * as React from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-// import "./containerAdmin.css";
+
 import Cube from "./Cube";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -15,6 +15,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function BasicGrid() {
+ 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={7}>
@@ -25,9 +26,11 @@ export default function BasicGrid() {
         </Grid>
 
         <Grid item xs={12}>
-          {/* <Item> */}
-          <Cube />
-          {/* </Item> */}
+         
+          <Cube/>
+            
+          
+         
         </Grid>
       </Grid>
     </Box>

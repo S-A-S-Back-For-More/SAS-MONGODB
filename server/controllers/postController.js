@@ -11,7 +11,11 @@ const { post } = require("../routes/Posts");
 //@route        GET/api/posts
 //@access       private(after added authentication)
 const getUserPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({ type: "user" });
+  const posts = await Post.find({ type: "user" }).populate('image');
+  res.json(posts);
+});
+const getAdminPosts = asyncHandler(async (req, res) => {
+  const posts = await Post.find({ type: "admin" }).populate('image');
   res.json(posts);
 });
 
@@ -64,20 +68,18 @@ const deletePost = asyncHandler(async (req, res) => {
   await post.delete();
   res.json({ id: req.params.id });
 });
-// const deletePost = asyncHandler(async (req, res) => {
-//   const post = await Post.findById(req.params.id);
-//   if (!post) {
-//     res.status(400);
-//     throw new Error("Post not found");
-//   }
-//   await post.delete();
-//   res.json({ id: req.params.id });
-// });
+const deletePosts = asyncHandler(async (req, res) => {
+  const post = await Post.deleteMany({});
+ 
+  res.json({post});
+});
+
+
 
 const getPost = asyncHandler(async (req, res) => {
   const id = req.params.id;
 
-  Post.findById(id)
+  Post.findById(id).populate('image')
     .then((post) => {
       res.json(post);
     })
@@ -88,13 +90,17 @@ const getPost = asyncHandler(async (req, res) => {
 const getSingleUserPosts = asyncHandler(async (req, res) => {
   const id = req.params.id;
 
-  Post.find({ authorID: id.toString() })
+  Post.find({ authorID: id.toString() }).populate('image')
     .then((posts) => {
       res.json(posts);
     })
     .catch((err) => {
       res.json({ error: err });
     });
+});
+const getPostCount = asyncHandler(async (req, res) => {
+  const postCount = await Post.estimatedDocumentCount();
+  res.json(postCount);
 });
 //export the function to be used in routes
 module.exports = {
@@ -104,4 +110,7 @@ module.exports = {
   updatePost,
   deletePost,
   getPost,
+  getPostCount,
+  deletePosts,
+  getAdminPosts
 };

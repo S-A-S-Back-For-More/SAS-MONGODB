@@ -8,21 +8,44 @@ function AddPost() {
   const [location, setLocation] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
+   const[imageId,setImageId] = React.useState(null)
+    const[imageData,setImageData] = useState(null)
 
   //make sure to fetch the id from context api and add it dynamiccaly to the post request here, I am hardcoding it for now
-  const createPost = (e) => {
-    e.preventDefault();
-    axios
-      .post("http://localhost:5000/api/posts/", {
+  const createPost = async (e) => {
+     e.preventDefault();
+     const data = new FormData()
+      data.append('file',imageData)
+      //upload image to server
+   let responseOne =  await  axios.post("http://localhost:5000/api/images/upload", data).then (response => {
+      
+    console.log('jjj')
+    return response.data
+   }
+ 
+     )
+  if (responseOne.success){
+     axios.post("http://localhost:5000/api/posts/", {
         location,
         description: content,
-        image,
+        image:responseOne.Image._id,
         authorID: "63af0594151ed1332c88f2ad",
       })
       .then((response) => {
+       
         console.log("success:", response.data);
-      });
+      })
+  }
+   
+   
   };
+
+  const fileChange = (e) =>{
+      setImageData(e.target.files[0])
+     
+      
+      }
+   
   return (
     <>
       <Navbar />
@@ -68,12 +91,9 @@ function AddPost() {
           <br />
           <input
             type="file"
-            name="addImg"
-            id=""
-            value={image}
-            onChange={(e) => {
-              setImage(e.target.value);
-            }}
+            name="file"
+           
+            onChange={fileChange}
           />
           <br />
           <button

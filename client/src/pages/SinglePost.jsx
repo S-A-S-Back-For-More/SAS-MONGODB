@@ -10,6 +10,7 @@ import axios from "axios";
 function SinglePost() {
   let { id } = useParams();
   const [postObject, setPostObject] = useState(null);
+  const [binaryString, setBinaryString] = useState(null);
   const [searchParams] = useSearchParams();
 
   //single post
@@ -19,8 +20,18 @@ function SinglePost() {
       .then((response) => {
         console.log(response.data);
         setPostObject(response.data);
+        let array = response.data.image?.img?.data?.data
+        setBinaryString(`data:image/jpeg;base64,${arrayBufferToBase64(array)}`)
+
       });
   }, []);
+  function arrayBufferToBase64(buffer) {
+    var binary = '';
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => binary += String.fromCharCode(b));
+    return window.btoa(binary);
+  };
+
   return (
     <>
       <Navbar />
@@ -53,21 +64,23 @@ function SinglePost() {
             marginTop: "5em",
           }}
         >
-          <h3 style={{ color: "white" }}>
+          <div className="container-img">
+            <div>
+              <img
+                src={binaryString}
+                style={{ width: "25em" }}
+              />
+            </div>
+          </div>
+          <h3 style={{ color: "black" }}>
             {postObject && postObject.location}
           </h3>
-          <h5 style={{ color: "white" }}>
+          <h5 style={{ color: "black" }}>
             {postObject && postObject.description}
           </h5>
+
         </div>
-        <div className="container-img">
-          <div>
-            <img
-              src={postObject && postObject.image}
-              style={{ width: "25em" }}
-            />
-          </div>
-        </div>
+
       </div>
       <BtnPost />
     </>
@@ -77,11 +90,15 @@ function SinglePost() {
 export default SinglePost;
 
 //view post image in recommendation page on the cube -- user
+
+
+
 //view detailed view of post -- user
-//view image of posts on profile page --user
-//add post image on the recommendation page -- admin
-//create a new post --admin
-//view all users, delete users --admin
+//view image of posts on commuinty page --user (done)
+//view all users -- admin (done)
+//delete users --admin ( done)
+//view posts -- admin (done)
+//view post Count -- admin (done)
 
 //create post for user (done)
 //delete the post --user (done)
