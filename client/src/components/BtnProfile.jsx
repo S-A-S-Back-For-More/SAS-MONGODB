@@ -20,9 +20,7 @@ function BtnProfile() {
               navigate("/add-post");
             }}
           >
-            <span className="btn--anim1"></span>
-            <span className="btn--anim1"></span>
-            <span className="btn--anim1"></span>
+
             <span className="btn--anim1"></span>
             ADD POST
           </button>
