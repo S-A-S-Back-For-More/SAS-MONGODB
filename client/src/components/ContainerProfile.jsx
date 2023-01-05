@@ -1,9 +1,19 @@
-import "./containerProfile.css";
+import Typography from "@mui/material/Typography";
+import "@fontsource/roboto/300.css";
+import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import BtnProfile from "./BtnProfile";
-//import Posts from "./posts/posts";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import { CardActionArea } from "@mui/material";
 
 //fetch id from context api
 const id = "63af0594151ed1332c88f2ad";
@@ -31,11 +41,16 @@ function ContainerProfile() {
       });
   }, []);
   function arrayBufferToBase64(buffer) {
+
     var binary = '';
     var bytes = [].slice.call(new Uint8Array(buffer));
     bytes.forEach((b) => binary += String.fromCharCode(b));
     return window.btoa(binary);
   };
+
+  
+  }
+
 
   const viewDetails = (id) => {
     navigate({
@@ -131,6 +146,7 @@ setChangedImage(true)
   return (
     <>
 
+
       <div className="container" style={{ border: "1px solid white" }}>
         {/* get all posts */}
         {listOfPosts.map((value, key) => {
@@ -217,6 +233,7 @@ setChangedImage(true)
       </div>
 
       <BtnProfile />
+
     </>
   );
 }
