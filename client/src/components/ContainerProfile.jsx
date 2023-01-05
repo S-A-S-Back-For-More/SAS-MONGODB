@@ -24,12 +24,16 @@ function ContainerProfile() {
   const [editResponse, setEditResponse] = useState(null);
   const [location, setLocation] = useState(null);
   const [image, setImage] = useState(null);
+  const[changedImage,setChangedImage] = useState(false)
   const [content, setcontent] = useState(null);
   const [open, setOpen] = useState(false);
+  const [idd, setIdd] = useState(null);
+  const [value, setValue] = useState(0); // integer state
 
   // const [post, setPost] = useState([]);
   //all posts
   useEffect(() => {
+    console.log('in useEffect')
     axios
       .get(`http://localhost:5000/api/posts/singleuserpost/${id}`)
       .then((response) => {
@@ -37,11 +41,16 @@ function ContainerProfile() {
       });
   }, []);
   function arrayBufferToBase64(buffer) {
-    var binary = "";
+
+    var binary = '';
     var bytes = [].slice.call(new Uint8Array(buffer));
-    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+    bytes.forEach((b) => binary += String.fromCharCode(b));
     return window.btoa(binary);
+  };
+
+  
   }
+
 
   const viewDetails = (id) => {
     navigate({
@@ -59,157 +68,172 @@ function ContainerProfile() {
     });
   };
 
-  const editPost = () => {
-    console.log("inside edit function");
-    setOpen(true);
-    axios.get(`http://localhost:5000/api/posts/post/${id}`).then((response) => {
-      setEditResponse(response.data);
-    });
-    editResponse && console.log(editResponse);
+  const editPost = (event, location, description, id, image) => {
+  
+    event.stopPropagation()
+  
+    setLocation(location)
+    setcontent(description)
+    setImage(image)
+    setOpen(true)
+    setIdd(id)
 
-    editResponse &&
-      setLocation(editResponse.location) &&
-      setcontent(editResponse.description) &&
-      setImage(editResponse.image);
+  };
+  const editImage = (e) =>{
+    
+setImage(e.target.files[0]);
+setChangedImage(true)
+              
+  }
+
+  function useForceUpdate() {
+
+    setValue(value + 1); // update state to force render
+    // An function that increment 👆🏻 the previous state like here 
+    // is better than directly setting `value + 1`
+  }
+
+  const updatePost = async (e) => {
+    e.preventDefault();
+    const data = new FormData()
+    data.append('file', image)
+    //upload image to server
+    let responseOne =changedImage && await axios.post("http://localhost:5000/api/images/upload", data).then(response => {
+
+   
+      return response.data
+    }
+
+    )
+
+
+
+    if (!changedImage ) {
+      console.log('here')
+      axios.put(`http://localhost:5000/api/posts/${idd}`, {
+        location,
+        description: content,
+        image: image,
+        authorID: "63af0594151ed1332c88f2ad",
+      })
+        .then((response) => {
+
+          console.log("success:", response.data);
+          useForceUpdate()
+        })
+    }
+    
+    if (responseOne?.success) {
+        console.log('here')
+        axios.put(`http://localhost:5000/api/posts/${idd}`, {
+          location,
+          description: content,
+          image: responseOne.Image._id,
+          authorID: "63af0594151ed1332c88f2ad",
+        })
+          .then((response) => {
+
+            console.log("success:", response.data);
+            useForceUpdate()
+          })
+      }
+
+    
+
+
   };
 
   return (
     <>
-      <CssBaseline />
-      <Container maxWidth="xl" >
-        <Box>
-          <Typography
-            variant="h5"
-            component="h1"
-            color="#333"
-            textAlign="center"
-            mt="1em"
-          >
-            My destinations...
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            textAlign: "center",
-            justifyContent: "center",
-            marginTop: "2em",
-            marginBottom: "2em",
-          }}
-        >
-          <BtnProfile />
-        </Box>
-        <Grid
-          container
-          spacing={2}
-          sx={{
-            
-            height: "60vh",
 
-            marginTop: "8em",
-            width: "100%",
-            marginLeft: "1px",
-            paddingRight: "1em",
-            overflowY: "auto",
-            margin: "0 auto",
-          }}
-          maxWidth="md"
-        >
-          {/* testcard */}
-          {listOfPosts.map((value, key, card) => {
-            let array = value.image?.img?.data?.data;
-            let binaryString = `data:image/jpeg;base64,${arrayBufferToBase64(
-              array
-            )}`;
-            return (
-              <Grid item key={key} xs={12} sm={6} md={4}>
-                <Card elevation={5}
-                  sx={{ maxWidth: 345, marginBottom: 2 }}
-                  onClick={() => viewDetails(value._id)}
-                >
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={binaryString}
-                      alt="custom"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {value.location}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {value.description}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions sx={{ justifyContent: "space-between" }}>
-                    <Button size="small" color="primary">
-                      <span
-                        className="material-symbols-outlined"
-                        onClick={() => deletePost(event, value._id)}
-                      >
-                        delete
-                      </span>
-                    </Button>
-                    <Button>
-                      <span
-                        className="material-symbols-outlined"
-                        onClick={editPost}
-                      >
-                        edit
-                      </span>
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            );
-          })}
-          {open && (
-            <form>
-              <input
-                type="text"
-                name="location"
-                id=""
-                value={location}
-                style={{ width: "30em", marginBottom: "2em" }}
-                placeholder="Location"
-                onChange={(e) => {
-                  setLocation(e.target.value);
+
+      <div className="container" style={{ border: "1px solid white" }}>
+        {/* get all posts */}
+        {listOfPosts.map((value, key) => {
+          let array = value.image?.img?.data?.data
+          let binaryString = `data:image/jpeg;base64,${arrayBufferToBase64(array)}`
+
+          return (
+            <div key={key}>
+              <div
+                className="post"
+                style={{
+                  border: "1px solid white",
+                  width: "300px",
+                  height: "300px",
                 }}
-              />
-              <textarea
-                name="content"
-                id=""
-                cols="30"
-                rows="10"
-                value={content}
-                placeholder="your description"
-                style={{ width: "30em", marginBottom: "2em" }}
-                onChange={(e) => {
-                  setContent(e.target.value);
-                }}
-              ></textarea>
-              <br />
-              <input
-                type="file"
-                name="addImg"
-                id=""
-                value={image}
-                onChange={(e) => {
-                  setImage(e.target.value);
-                }}
-              />
-              <br />
-              <button
-                type="submit"
-                style={{ zIndex: "10", marginTop: "10em", marginBottom: "2em" }}
+                onClick={() => viewDetails(value._id)}
               >
-                Update Post
-              </button>
-            </form>
-          )}
-        </Grid>
-      </Container>
+
+                <div className="location">{value.location}</div>
+                <div className="content">{value.description}</div>
+                <div className="image">
+                  <span
+                    className="material-symbols-outlined"
+                    onClick={(event) => deletePost(event, value._id)}
+                  >
+                    delete
+                  </span>
+                  <span class="material-symbols-outlined"
+                    onClick={(event) => editPost(event, value.location, value.description, value._id, value.image._id)}>
+                    edit
+                  </span>
+                  <img
+                    src={binaryString}
+                    style={{ width: "100%", height: "15em" }}
+                  />
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+        {open && (
+          <form>
+            <input
+              type="text"
+              name="location"
+              id=""
+              value={location}
+              style={{ width: "30em", marginBottom: "2em" }}
+              placeholder="Location"
+              onChange={(e) => {
+                setLocation(e.target.value);
+              }}
+            />
+            <textarea
+              name="content"
+              id=""
+              cols="30"
+              rows="10"
+              value={content}
+              placeholder="your description"
+              style={{ width: "30em", marginBottom: "2em" }}
+              onChange={(e) => {
+                setcontent(e.target.value);
+              }}
+            ></textarea>
+            <br />
+            <input
+              type="file"
+              name="file"
+
+              onChange={editImage}
+            />
+            <br />
+            <button
+              type="submit"
+              style={{ zIndex: "10", marginTop: "10em", marginBottom: "3em" }}
+              onClick={updatePost}
+            >
+              Update Post
+            </button>
+          </form>
+        )}
+      </div>
+
+      <BtnProfile />
+
     </>
   );
 }

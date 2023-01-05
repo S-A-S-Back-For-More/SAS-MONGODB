@@ -20,7 +20,7 @@ function SinglePost() {
       .then((response) => {
         console.log(response.data);
         setPostObject(response.data);
-        let array = response.data.image?.img?.data?.data
+        let array = response.data?.image?.img?.data?.data
         setBinaryString(`data:image/jpeg;base64,${arrayBufferToBase64(array)}`)
 
       });

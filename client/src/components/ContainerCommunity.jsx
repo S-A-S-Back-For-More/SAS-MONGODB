@@ -1,8 +1,5 @@
 import React from "react";
-
 import axios from "axios";
-
-import avatar from "../assets/avatar.jpg";
 import "./ContainerCommunity.css";
 
 
