@@ -39,7 +39,7 @@ function App() {
         <Route path="/add-post" element={<AddPost />} />
         <Route path="/*" element={<ErrorPage />} />
       </Routes>
-    </div>
+    </div> 
   );
 }
 
