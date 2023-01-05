@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
 // import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 // import Tooltip from "@mui/material/Tooltip";
@@ -37,10 +37,10 @@ function ResponsiveAppBar() {
   //   };
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
+    <AppBar position="static" sx={{bgcolor: "transparent"}} elevation={0}>
+      <Container maxWidth="xl" >
         <Toolbar disableGutters >
-          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
+      
           <Typography
             variant="h6"
             noWrap
@@ -52,7 +52,7 @@ function ResponsiveAppBar() {
               fontFamily: "roboto",
               fontWeight: 400,
               letterSpacing: ".3rem",
-              color: "white",
+              color: "#333",
               textDecoration: "none",
             }}
           >
@@ -66,7 +66,7 @@ function ResponsiveAppBar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color="#333"
             >
               <MenuIcon />
             </IconButton>
@@ -76,6 +76,7 @@ function ResponsiveAppBar() {
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "left",
+                
               }}
               keepMounted
               transformOrigin={{
@@ -90,8 +91,8 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">
-                    <Link to={`/${page}`} style={{textDecoration: "none", color: "#333"}}>{page}</Link>
+                  <Typography textAlign="center" sx={{color: "black"}}>
+                    <Link to={`/${page}`} style={{textDecoration: "none",color: "#333" }} >{page}</Link>
                   </Typography>
                 </MenuItem>
               ))}
@@ -110,8 +111,8 @@ function ResponsiveAppBar() {
               fontFamily: "roboto",
               fontWeight: 400,
               letterSpacing: ".3rem",
-              color: "white",
-              textDecoration: "none ",
+              color: "#333",
+              textDecoration: "none",
              
 
               
@@ -127,7 +128,7 @@ function ResponsiveAppBar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                <Link to={`/${page}`} style={{textDecoration: "none", color: "#ddd"}}>{page}</Link>
+                <Link to={`/${page}`} style={{textDecoration: "none", color: "#333"}}>{page}</Link>
               </Button>
             ))}
           </Box>
