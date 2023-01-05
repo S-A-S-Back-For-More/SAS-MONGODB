@@ -102,7 +102,7 @@ function ContainerProfile() {
           container
           spacing={2}
           sx={{
-            background: "#ddd",
+            
             height: "60vh",
 
             marginTop: "8em",
@@ -122,7 +122,7 @@ function ContainerProfile() {
             )}`;
             return (
               <Grid item key={key} xs={12} sm={6} md={4}>
-                <Card
+                <Card elevation={5}
                   sx={{ maxWidth: 345, marginBottom: 2 }}
                   onClick={() => viewDetails(value._id)}
                 >
